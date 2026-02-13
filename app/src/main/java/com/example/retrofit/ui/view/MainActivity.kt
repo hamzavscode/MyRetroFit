@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             if (postId != null) {
                 viewModel.fetchPostById(postId)
             } else {
-                tvPostDetails.text = "Veuillez entrer un ID valide."
+                tvPostDetails.text = "Veuillez entrer un IDvalide."
             }
         }
 
