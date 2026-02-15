@@ -6,6 +6,7 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ApiServiceCreate {
+
     @POST("posts")
     fun createPost(@Body newPost: Post): Call<Post>
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofit.R
 import com.example.retrofit.data.adapter.PostAdapter
 import com.example.retrofit.data.model.Post
+import com.example.retrofit.service.RetrofitCreate
 import com.example.retrofit.ui.viewmodel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -40,14 +41,47 @@ class MainActivity : AppCompatActivity() {
             val title = etTitle.text.toString()
             val body = etBody.text.toString()
 
-            val newPost = Post(
-                userId = 1,
-                id = 0,
-                title = title,
-                body = body
-            )
+            if (title.isEmpty() || body.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    "Veuillez remplir tous les champs",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
 
-            viewModel.createPost(newPost)
+
+                val newPost = Post(
+                    userId = 1,
+                    id = 0,
+                    title = title,
+                    body = body
+                )
+
+            RetrofitCreate.instance.createPost(newPost).enqueue(object : retrofit2.Callback<Post> {
+                override fun onResponse(call: retrofit2.Call<Post>, response: retrofit2.Response<Post>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Post créé avec succès",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Erreur lors de la création",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                        override fun onFailure(call: retrofit2.Call<Post>, t: Throwable) {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Erreur API : ${t.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
         }
 
         viewModel.createdPost.observe(this) { post ->
