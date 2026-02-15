@@ -9,4 +9,5 @@ interface ApiServiceCreate {
 
     @POST("posts")
     fun createPost(@Body newPost: Post): Call<Post>
+
 }

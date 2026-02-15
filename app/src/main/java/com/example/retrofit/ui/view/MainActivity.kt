@@ -47,41 +47,18 @@ class MainActivity : AppCompatActivity() {
                     "Veuillez remplir tous les champs",
                     Toast.LENGTH_SHORT
                 ).show()
+                return@setOnClickListener
             }
 
 
-                val newPost = Post(
-                    userId = 1,
-                    id = 0,
-                    title = title,
-                    body = body
-                )
+            val newPost = Post(
+                userId = 1,
+                id = 0,
+                title = title,
+                body = body
+            )
 
-            RetrofitCreate.instance.createPost(newPost).enqueue(object : retrofit2.Callback<Post> {
-                override fun onResponse(call: retrofit2.Call<Post>, response: retrofit2.Response<Post>) {
-                            if (response.isSuccessful) {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Post créé avec succès",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            } else {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Erreur lors de la création",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-
-                        override fun onFailure(call: retrofit2.Call<Post>, t: Throwable) {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Erreur API : ${t.message}",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    })
+            viewModel.createPost(newPost)
         }
 
         viewModel.createdPost.observe(this) { post ->

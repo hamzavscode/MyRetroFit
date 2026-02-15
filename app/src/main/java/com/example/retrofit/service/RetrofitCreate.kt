@@ -3,6 +3,7 @@ package com.example.retrofit.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 object RetrofitCreate {
 
@@ -16,4 +17,5 @@ object RetrofitCreate {
             .build()
             .create(ApiServiceCreate::class.java)
     }
+
 }

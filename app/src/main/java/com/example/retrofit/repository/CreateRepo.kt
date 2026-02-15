@@ -10,4 +10,5 @@ class CreateRepo {
     fun createPost(post: Post): Call<Post> {
         return RetrofitCreate.instance.createPost(post)
     }
+
 }
